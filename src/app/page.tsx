@@ -8,6 +8,7 @@ import Divider from '@mui/material/Divider';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import Testimonials from '@/ui-components/Testimonials';
 import AutoAwesomeRoundedIcon from '@mui/icons-material/AutoAwesomeRounded';
 import AppAppBar from '../ui-components/AppAppBar';
 import Hero from '../ui-components/Hero';
@@ -84,6 +85,8 @@ export default function LandingPage() {
       <Hero />
       <Box sx={{ bgcolor: 'background.default' }}>
         <Features />
+        <Divider />
+        <Testimonials />
         <Divider />
         <FAQ />
       </Box>
