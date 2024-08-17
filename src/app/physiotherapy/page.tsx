@@ -17,6 +17,7 @@ import * as handPoseDetection from "@tensorflow-models/hand-pose-detection";
 import * as handpose from "@tensorflow-models/handpose";
 import React, { useEffect, useRef } from "react";
 import Webcam from "react-webcam";
+import AppAppBar from "@/ui-components/AppAppBar";
 
 const lines = [
     ["wrist", "thumb_cmc"],
@@ -119,9 +120,22 @@ export default function Page() {
         runHandpose();
     }, []);
 
+    const [mode, setMode] = React.useState<PaletteMode>('light');
+    const [showCustomTheme, setShowCustomTheme] = React.useState(true);
+    const LPtheme = createTheme(getLPTheme(mode));
+    const defaultTheme = createTheme({ palette: { mode } });
+
+    const toggleColorMode = () => {
+        setMode((prev) => (prev === 'dark' ? 'light' : 'dark'));
+    };
+
+    const toggleCustomTheme = () => {
+        setShowCustomTheme((prev) => !prev);
+    };
+
     return (
-        <div className="App">
-            <header className="App-header">
+        <div>
+            <AppAppBar />
                 <Webcam
                     mirrored={true}
                     ref={webcamRef}
@@ -154,7 +168,7 @@ export default function Page() {
                         width: 640,
                     }}
                 />
-            </header>
+            </div>
         </div>
     );
 }
