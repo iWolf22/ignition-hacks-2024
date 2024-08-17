@@ -10,6 +10,7 @@
 // 8. Draw functions DONE
 
 import getLPTheme from "@/app/getLPTheme";
+import OpenAIAssistant from "@/components/OpenAIAssistant";
 import AppAppBar from "@/ui-components/AppAppBar";
 import "@mediapipe/hands";
 import {
@@ -201,6 +202,7 @@ export default function Page() {
                             <div className="mt-16">sdafsdafd</div>
                         </div>
                     </Stack>
+                    <OpenAIAssistant />
                 </Container>
             </ThemeProvider>
         </div>

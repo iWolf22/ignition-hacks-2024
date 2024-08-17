@@ -169,7 +169,7 @@ const OpenAIAssistant = ({
                     </button>
                 )}
             </form>
-            {audio && <audio controls src={audio}></audio>}
+            {audio && <audio autoPlay={true} src={audio}></audio>}
         </div>
     );
 };
