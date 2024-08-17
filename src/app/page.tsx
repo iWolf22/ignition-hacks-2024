@@ -19,7 +19,7 @@ import Testimonials from './components/Testimonials';
 import FAQ from './components/FAQ';
 import Footer from './components/Footer';
 import getLPTheme from './getLPTheme';
-import OpenAIAssistant from './components/OpenAIAssistant';
+import OpenAIAssistant from "../components/OpenAIAssistant";
 
 interface ToggleCustomThemeProps {
   showCustomTheme: Boolean;
