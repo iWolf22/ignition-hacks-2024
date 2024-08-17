@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import OpenAI from "openai";
+
+import { openai } from "../../../utils/openai";
 
 export const POST = async (request: NextRequest) => {
     const newMessage = await request.json();
-    const openai = new OpenAI();
 
     if (newMessage.threadId == null) {
         const thread = await openai.beta.threads.create();

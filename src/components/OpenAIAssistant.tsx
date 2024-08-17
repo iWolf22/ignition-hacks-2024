@@ -25,6 +25,7 @@ const OpenAIAssistant = ({
         id: "Thinking...",
         role: "assistant",
     });
+    const [audio, setAudio] = useState<null | string>(null);
     const messageId = useRef(0);
 
     // set default greeting Message
@@ -34,6 +35,21 @@ const OpenAIAssistant = ({
         id: "greeting",
         role: "assistant",
     };
+
+    async function getAudio(message: Message) {
+        const response = await fetch("/api/openai-tts", {
+            body: JSON.stringify({ text: message.content }),
+            headers: {
+                "Content-Type": "application/json",
+            },
+            method: "POST",
+        });
+
+        const arrayBuffer = await response.arrayBuffer();
+        const blob = new Blob([arrayBuffer], { type: "audio/mpeg" });
+        const url = URL.createObjectURL(blob);
+        setAudio(url);
+    }
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -98,18 +114,17 @@ const OpenAIAssistant = ({
 
             // add assistant message to list of messages
             messageId.current++;
-            setMessages((prevMessages) => [
-                ...prevMessages,
-                {
-                    content: finalContent,
-                    createdAt: new Date(),
-                    id: messageId.current.toString(),
-                    role: "assistant",
-                },
-            ]);
+            const newMessage = {
+                content: finalContent,
+                createdAt: new Date(),
+                id: messageId.current.toString(),
+                role: "assistant",
+            };
+            setMessages((prevMessages) => [...prevMessages, newMessage]);
 
             // remove busy indicator
             setIsLoading(false);
+            getAudio(newMessage);
         });
 
         runner.on("error", (error) => {
@@ -154,6 +169,7 @@ const OpenAIAssistant = ({
                     </button>
                 )}
             </form>
+            {audio && <audio controls src={audio}></audio>}
         </div>
     );
 };
