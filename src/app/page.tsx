@@ -20,6 +20,7 @@ import FAQ from '../ui-components/FAQ';
 import Footer from '../ui-components/Footer';
 import getLPTheme from './getLPTheme';
 import OpenAIAssistant from "../components/OpenAIAssistant";
+import Head from 'next/head';
 
 interface ToggleCustomThemeProps {
   showCustomTheme: Boolean;
@@ -79,6 +80,13 @@ export default function LandingPage() {
   };
 
   return (
+    <>
+    <Head>
+      <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
+      <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
+      <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
+      <link rel="manifest" href="/site.webmanifest"/>
+    </Head>
     <ThemeProvider theme={showCustomTheme ? LPtheme : defaultTheme}>
       <CssBaseline />
       <AppAppBar mode={mode} toggleColorMode={toggleColorMode} />
@@ -91,5 +99,6 @@ export default function LandingPage() {
         <FAQ />
       </Box>
     </ThemeProvider>
+    </>
   );
 }
