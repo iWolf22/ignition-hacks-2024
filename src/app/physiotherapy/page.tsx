@@ -9,7 +9,16 @@
 // 7. Drawing utilities DONE
 // 8. Draw functions DONE
 
+import getLPTheme from "@/app/getLPTheme";
+import AppAppBar from "@/ui-components/AppAppBar";
 import "@mediapipe/hands";
+import {
+    Container,
+    createTheme,
+    CssBaseline,
+    PaletteMode,
+    ThemeProvider,
+} from "@mui/material";
 import * as tf from "@tensorflow/tfjs";
 import "@tensorflow/tfjs-backend-webgl";
 import "@tensorflow/tfjs-core";
@@ -17,7 +26,6 @@ import * as handPoseDetection from "@tensorflow-models/hand-pose-detection";
 import * as handpose from "@tensorflow-models/handpose";
 import React, { useEffect, useRef } from "react";
 import Webcam from "react-webcam";
-import AppAppBar from "@/ui-components/AppAppBar";
 
 const lines = [
     ["wrist", "thumb_cmc"],
@@ -120,13 +128,13 @@ export default function Page() {
         runHandpose();
     }, []);
 
-    const [mode, setMode] = React.useState<PaletteMode>('light');
+    const [mode, setMode] = React.useState<PaletteMode>("light");
     const [showCustomTheme, setShowCustomTheme] = React.useState(true);
     const LPtheme = createTheme(getLPTheme(mode));
     const defaultTheme = createTheme({ palette: { mode } });
 
     const toggleColorMode = () => {
-        setMode((prev) => (prev === 'dark' ? 'light' : 'dark'));
+        setMode((prev: any) => (prev === "dark" ? "light" : "dark"));
     };
 
     const toggleCustomTheme = () => {
@@ -135,40 +143,47 @@ export default function Page() {
 
     return (
         <div>
-            <AppAppBar />
-                <Webcam
-                    mirrored={true}
-                    ref={webcamRef}
-                    style={{
-                        height: 480,
-                        left: 0,
-                        marginLeft: "auto",
-                        marginRight: "auto",
-                        minHeight: 480,
-                        minWidth: 640,
-                        position: "absolute",
-                        right: 0,
-                        textAlign: "center",
-                        width: 640,
-                    }}
-                />
-
-                <canvas
-                    ref={canvasRef}
-                    style={{
-                        height: 480,
-                        left: 0,
-                        marginLeft: "auto",
-                        marginRight: "auto",
-                        minHeight: 480,
-                        minWidth: 640,
-                        position: "absolute",
-                        right: 0,
-                        textAlign: "center",
-                        width: 640,
-                    }}
-                />
-            </div>
+            <ThemeProvider theme={showCustomTheme ? LPtheme : defaultTheme}>
+                <CssBaseline />
+                <AppAppBar mode={mode} toggleColorMode={toggleColorMode} />
+                <Container>
+                    <div className="grid grid-cols-2">
+                        <div>
+                            <Webcam
+                                mirrored={true}
+                                ref={webcamRef}
+                                style={{
+                                    height: 480,
+                                    left: 0,
+                                    marginLeft: "auto",
+                                    marginRight: "auto",
+                                    minHeight: 480,
+                                    minWidth: 640,
+                                    right: 0,
+                                    textAlign: "center",
+                                    width: 640,
+                                }}
+                            />
+                            <canvas
+                                ref={canvasRef}
+                                style={{
+                                    height: 480,
+                                    left: 0,
+                                    marginLeft: "auto",
+                                    marginRight: "auto",
+                                    minHeight: 480,
+                                    minWidth: 640,
+                                    position: "relative",
+                                    textAlign: "center",
+                                    top: -480,
+                                    width: 640,
+                                }}
+                            />
+                        </div>
+                        <div className="h-full w-full bg-yellow-300">sfsdf</div>
+                    </div>
+                </Container>
+            </ThemeProvider>
         </div>
     );
 }
