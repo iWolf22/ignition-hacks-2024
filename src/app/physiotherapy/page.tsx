@@ -17,6 +17,7 @@ import {
     createTheme,
     CssBaseline,
     PaletteMode,
+    Stack,
     ThemeProvider,
 } from "@mui/material";
 import * as tf from "@tensorflow/tfjs";
@@ -146,42 +147,60 @@ export default function Page() {
             <ThemeProvider theme={showCustomTheme ? LPtheme : defaultTheme}>
                 <CssBaseline />
                 <AppAppBar mode={mode} toggleColorMode={toggleColorMode} />
-                <Container>
-                    <div className="grid grid-cols-2">
-                        <div>
+                <Container style={{ marginTop: "50px" }}>
+                    <Stack direction="row">
+                        <div style={{ backgroundColor: "yellow" }}>
                             <Webcam
                                 mirrored={true}
                                 ref={webcamRef}
                                 style={{
-                                    height: 480,
+                                    height: 400,
                                     left: 0,
                                     marginLeft: "auto",
                                     marginRight: "auto",
-                                    minHeight: 480,
-                                    minWidth: 640,
+                                    minHeight: 400,
+                                    minWidth: 600,
                                     right: 0,
-                                    textAlign: "center",
-                                    width: 640,
+                                    textAlign: "left",
+                                    width: 600,
                                 }}
                             />
                             <canvas
                                 ref={canvasRef}
                                 style={{
-                                    height: 480,
+                                    height: 400,
                                     left: 0,
                                     marginLeft: "auto",
                                     marginRight: "auto",
-                                    minHeight: 480,
-                                    minWidth: 640,
+                                    minHeight: 400,
+                                    minWidth: 600,
                                     position: "relative",
                                     textAlign: "center",
-                                    top: -480,
-                                    width: 640,
+                                    top: -400,
+                                    width: 600,
                                 }}
                             />
                         </div>
-                        <div className="h-full w-full bg-yellow-300">sfsdf</div>
-                    </div>
+                        <div className="top-6">
+                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Repellendus, neque? Facere, voluptatibus
+                            minus. Ratione ipsam dolorem doloremque nemo earum?
+                            Illum, esse quam! Exercitationem ipsa minus
+                            mollitia, commodi placeat explicabo fuga, adipisci
+                            ullam at, numquam id illum quo omnis aut nesciunt ex
+                            nulla quam perferendis repellat est unde
+                            consequuntur animi inventore itaque? Quia, assumenda
+                            voluptatem? Odit, ex delectus. Modi delectus
+                            voluptatum illo, soluta ipsum laudantium
+                            reprehenderit dicta nemo aut odit aliquid vero
+                            tempora repudiandae incidunt perspiciatis fuga ab
+                            odio! Sed cumque rem culpa molestiae nemo, illo
+                            excepturi adipisci aspernatur beatae quibusdam?
+                            Mollitia error saepe, vero iure magni reiciendis
+                            voluptas harum veritatis.
+                            <div className="mt-16">sdafsdafd</div>
+                        </div>
+                    </Stack>
                 </Container>
             </ThemeProvider>
         </div>
