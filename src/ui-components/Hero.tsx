@@ -16,8 +16,8 @@ export default function Hero() {
         width: '100%',
         backgroundImage:
           theme.palette.mode === 'light'
-            ? 'linear-gradient(180deg, #CEE5FD, #FFF)'
-            : `linear-gradient(#02294F, ${alpha('#090E10', 0.0)})`,
+            ? 'linear-gradient(180deg, #C5E6D5, #FFF)'
+            : `linear-gradient(#12482A, ${alpha('#090E10', 0.0)})`,
         backgroundSize: '100% 20%',
         backgroundRepeat: 'no-repeat',
       })}
@@ -42,7 +42,7 @@ export default function Hero() {
               fontSize: 'clamp(3.5rem, 10vw, 4rem)',
             }}
           >
-            Mobility+&nbsp;
+            Physio&nbsp;
             <Typography
               component="span"
               variant="h1"
@@ -52,7 +52,7 @@ export default function Hero() {
                   theme.palette.mode === 'light' ? 'primary.main' : 'primary.light',
               }}
             >
-              products
+              Mobility+
             </Typography>
           </Typography>
           <Typography
@@ -60,37 +60,7 @@ export default function Hero() {
             color="text.secondary"
             sx={{ alignSelf: 'center', width: { sm: '100%', md: '80%' } }}
           >
-            BLAHBLAHBLAH.
-          </Typography>
-          <Stack
-            direction={{ xs: 'column', sm: 'row' }}
-            alignSelf="center"
-            spacing={1}
-            useFlexGap
-            sx={{ pt: 2, width: { xs: '100%', sm: 'auto' } }}
-          >
-            <TextField
-              id="outlined-basic"
-              hiddenLabel
-              size="small"
-              variant="outlined"
-              aria-label="Enter your email address"
-              placeholder="Your email address"
-              inputProps={{
-                autoComplete: 'off',
-                'aria-label': 'Enter your email addres',
-              }}
-            />
-            <Button variant="contained" color="primary">
-              Start now
-            </Button>
-          </Stack>
-          <Typography variant="caption" textAlign="center" sx={{ opacity: 0.8 }}>
-            By clicking &quot;Start now&quot; you agree to our&nbsp;
-            <Link href="#" color="primary">
-              Terms & Conditions
-            </Link>
-            .
+            Discover a new, efficient physiotherapy.
           </Typography>
         </Stack>
         <Box
@@ -102,19 +72,19 @@ export default function Hero() {
             width: '100%',
             backgroundImage:
               theme.palette.mode === 'light'
-                ? 'url("/static/images/templates/templates-images/hero-light.png")'
-                : 'url("/static/images/templates/templates-images/hero-dark.png")',
+                ? 'url("https://cdn.discordapp.com/attachments/1274426077795844176/1274443562959896658/image.png?ex=66c2458f&is=66c0f40f&hm=8e3fb36fa77e556e8ae11587540ee285716211baccb8caca6c61f8668a0ccdad&")'
+                : 'url("https://cdn.discordapp.com/attachments/1274426077795844176/1274443562959896658/image.png?ex=66c2458f&is=66c0f40f&hm=8e3fb36fa77e556e8ae11587540ee285716211baccb8caca6c61f8668a0ccdad&")',
             backgroundSize: 'cover',
             borderRadius: '10px',
             outline: '1px solid',
             outlineColor:
               theme.palette.mode === 'light'
-                ? alpha('#BFCCD9', 0.5)
-                : alpha('#9CCCFC', 0.1),
+                ? alpha('#A8DABF', 0.5)
+                : alpha('#6CCB91', 0.1),
             boxShadow:
               theme.palette.mode === 'light'
-                ? `0 0 12px 8px ${alpha('#9CCCFC', 0.2)}`
-                : `0 0 24px 12px ${alpha('#033363', 0.2)}`,
+                ? `0 0 12px 8px ${alpha('#6CCB91', 0.2)}`
+                : `0 0 24px 12px ${alpha('#12482A', 0.2)}`,
           })}
         />
       </Container>

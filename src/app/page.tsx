@@ -9,15 +9,14 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import AutoAwesomeRoundedIcon from '@mui/icons-material/AutoAwesomeRounded';
-import AppAppBar from './components/AppAppBar';
-import Hero from './components/Hero';
-import LogoCollection from './components/LogoCollection';
-import Highlights from './components/Highlights';
-import Pricing from './components/Pricing';
-import Features from './components/Features';
-import Testimonials from './components/Testimonials';
-import FAQ from './components/FAQ';
-import Footer from './components/Footer';
+import AppAppBar from '../ui-components/AppAppBar';
+import Hero from '../ui-components/Hero';
+import LogoCollection from '../ui-components/LogoCollection';
+import Highlights from '../ui-components/Highlights';
+import Pricing from '../ui-components/Pricing';
+import Features from '../ui-components/Features';
+import FAQ from '../ui-components/FAQ';
+import Footer from '../ui-components/Footer';
 import getLPTheme from './getLPTheme';
 import OpenAIAssistant from "../components/OpenAIAssistant";
 
@@ -84,24 +83,10 @@ export default function LandingPage() {
       <AppAppBar mode={mode} toggleColorMode={toggleColorMode} />
       <Hero />
       <Box sx={{ bgcolor: 'background.default' }}>
-        <OpenAIAssistant greeting="I am a helpful chat assistant. How can I help you?" />
-        <LogoCollection />
         <Features />
         <Divider />
-        <Testimonials />
-        <Divider />
-        <Highlights />
-        <Divider />
-        <Pricing />
-        <Divider />
         <FAQ />
-        <Divider />
-        <Footer />
       </Box>
-      <ToggleCustomTheme
-        showCustomTheme={showCustomTheme}
-        toggleCustomTheme={toggleCustomTheme}
-      />
     </ThemeProvider>
   );
 }

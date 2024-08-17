@@ -95,36 +95,20 @@ function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
                 alt="logo of sitemark"
               />
               <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+              <MenuItem
+                  onClick={() => scrollToSection('hero')}
+                  sx={{ py: '6px', px: '12px' }}
+                >
+                  <Typography variant="body2" color="text.primary">
+                    Home
+                  </Typography>
+                </MenuItem>
                 <MenuItem
                   onClick={() => scrollToSection('features')}
                   sx={{ py: '6px', px: '12px' }}
                 >
                   <Typography variant="body2" color="text.primary">
                     Features
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                  onClick={() => scrollToSection('testimonials')}
-                  sx={{ py: '6px', px: '12px' }}
-                >
-                  <Typography variant="body2" color="text.primary">
-                    Testimonials
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                  onClick={() => scrollToSection('highlights')}
-                  sx={{ py: '6px', px: '12px' }}
-                >
-                  <Typography variant="body2" color="text.primary">
-                    Highlights
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                  onClick={() => scrollToSection('pricing')}
-                  sx={{ py: '6px', px: '12px' }}
-                >
-                  <Typography variant="body2" color="text.primary">
-                    Pricing
                   </Typography>
                 </MenuItem>
                 <MenuItem
@@ -195,6 +179,9 @@ function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
                   >
                     <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
                   </Box>
+                  <MenuItem onClick={() => scrollToSection('hero')}>
+                    Home
+                  </MenuItem>
                   <MenuItem onClick={() => scrollToSection('features')}>
                     Features
                   </MenuItem>
