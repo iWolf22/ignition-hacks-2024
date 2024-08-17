@@ -16,7 +16,7 @@ export const POST = async (request: NextRequest) => {
     });
 
     const stream = await openai.beta.threads.runs.create(newMessage.threadId, {
-        assistant_id: newMessage.assistantId,
+        assistant_id: process.env.OPENAI_ASSISTANT_ID!,
         stream: true,
     });
 

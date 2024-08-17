@@ -12,10 +12,9 @@ interface Message {
     role: string;
 }
 
-export default function OpenAIAssistant({
-    assistantId = "",
+const OpenAIAssistant = ({
     greeting = "I am a helpful chat assistant. How can I help you?",
-}) {
+}) => {
     const [isLoading, setIsLoading] = useState(false);
     const [threadId, setThreadId] = useState<null | string>(null);
     const [prompt, setPrompt] = useState("");
@@ -66,7 +65,7 @@ export default function OpenAIAssistant({
         // post new message to server and stream OpenAI Assistant response
         const response = await fetch("/api/openai-assistant", {
             body: JSON.stringify({
-                assistantId: assistantId,
+                assistantId: "",
                 content: prompt,
                 threadId: threadId,
             }),
@@ -157,7 +156,7 @@ export default function OpenAIAssistant({
             </form>
         </div>
     );
-}
+};
 
 export function OpenAIAssistantMessage({ message }: { message: Message }) {
     function displayRole(roleName: string) {
@@ -200,3 +199,5 @@ function OpenAISpinner() {
         </svg>
     );
 }
+
+export default OpenAIAssistant;
