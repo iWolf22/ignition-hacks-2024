@@ -1,4 +1,5 @@
 {
+    "git.openRepositoryInParentFolders": "always",
     "editor.codeActionsOnSave": {
         "source.fixAll": "explicit"
     },
