@@ -4,6 +4,9 @@ import { AssistantStream } from "openai/lib/AssistantStream";
 import { useEffect, useRef, useState } from "react";
 import { AiOutlineRobot, AiOutlineSend, AiOutlineUser } from "react-icons/ai";
 import Markdown from "react-markdown";
+import SpeechRecognition, {
+    useSpeechRecognition,
+} from "react-speech-recognition";
 
 interface Message {
     content: string;
@@ -27,6 +30,16 @@ const OpenAIAssistant = ({
     });
     const [audio, setAudio] = useState<null | string>(null);
     const messageId = useRef(0);
+
+    const {
+        browserSupportsSpeechRecognition,
+        finalTranscript,
+        interimTranscript,
+        isMicrophoneAvailable,
+        listening,
+        resetTranscript,
+        transcript,
+    } = useSpeechRecognition();
 
     // set default greeting Message
     const greetingMessage = {
@@ -137,6 +150,19 @@ const OpenAIAssistant = ({
         setPrompt(e.target.value);
     }
 
+    useEffect(() => {
+        console.log(
+            browserSupportsSpeechRecognition
+                ? "Speech recognition supported"
+                : "Speech recognition not supported"
+        );
+
+        SpeechRecognition.startListening({
+            continuous: true,
+            interimResults: true,
+        });
+    }, []);
+
     return (
         <div className="relative flex flex-col bg-slate-200 shadow-md">
             <OpenAIAssistantMessage message={greetingMessage} />
@@ -170,6 +196,7 @@ const OpenAIAssistant = ({
                 )}
             </form>
             {audio && <audio autoPlay={true} src={audio}></audio>}
+            <p>{transcript}</p>
         </div>
     );
 };
