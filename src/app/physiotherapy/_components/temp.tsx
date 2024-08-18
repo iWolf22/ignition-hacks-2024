@@ -41,6 +41,7 @@ import React, {
     useState,
 } from "react";
 import Webcam from "react-webcam";
+import OpenAIAssistant from "@/components/OpenAIAssistant";
 
 const lines = [
     ["wrist", "thumb_cmc"],
@@ -477,6 +478,29 @@ export default function PhysiotherapyPage({
                                         </span>
                                     </div>
                                 </div>
+                            </Card>
+                            <Card
+                                style={{
+                                    marginTop: "32px",
+                                    padding: "16px",
+                                    height: "390px",
+                                }}
+                                sx={(theme) => ({
+                                    background:
+                                        theme.palette.mode === "light"
+                                            ? "#e9ffe9"
+                                            : "#05280a",
+                                    borderColor:
+                                        theme.palette.mode === "light"
+                                            ? "#d4e5e1"
+                                            : "#1b3726",
+                                    boxShadow:
+                                        theme.palette.mode === "light"
+                                            ? `0 0 1px rgba(0, 255, 0, 0.1), 1px 1.5px 2px -1px rgba(0, 255, 0, 0.15), 4px 4px 12px -2.5px rgba(0, 255, 0, 0.15)` // Green shadow
+                                            : "0 0 1px rgba(0, 80, 0, 0.7), 1px 1.5px 2px -1px rgba(0, 80, 0, 0.65), 4px 4px 12px -2.5px rgba(0, 80, 0, 0.65)", // Dark green shadow
+                                })}
+                            >
+                                <OpenAIAssistant />
                             </Card>
                         </div>
                     </Stack>

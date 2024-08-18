@@ -1,5 +1,6 @@
 "use client";
 
+import { List, TextField, Button } from "@mui/material";
 import _ from "lodash";
 import { AssistantStream } from "openai/lib/AssistantStream";
 import { useEffect, useRef, useState } from "react";
@@ -262,35 +263,51 @@ const OpenAIAssistant = ({
     }, []);
 
     return (
-        <div className="relative flex flex-col bg-slate-200 shadow-md">
-            <OpenAIAssistantMessage message={greetingMessage} />
-            {messages.map((m) => (
-                <OpenAIAssistantMessage key={m.id} message={m} />
-            ))}
-            {isLoading && <OpenAIAssistantMessage message={streamingMessage} />}
-            <form className="m-2 flex" onSubmit={handleSubmit}>
-                <input
+        <div
+            style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                height: "100%",
+            }}
+        >
+            <List
+                sx={{
+                    width: "100%",
+                    position: "relative",
+                    overflow: "auto",
+                    maxHeight: 330,
+                    "& ul": { padding: 0 },
+                }}
+            >
+                <OpenAIAssistantMessage message={greetingMessage} />
+                {messages.map((m) => (
+                    <OpenAIAssistantMessage key={m.id} message={m} />
+                ))}
+                {isLoading && (
+                    <OpenAIAssistantMessage message={streamingMessage} />
+                )}
+            </List>
+            <form
+                style={{ display: "flex", width: "100%", gap: "10px" }}
+                onSubmit={handleSubmit}
+            >
+                <TextField
                     autoFocus
-                    className="text-gray-70 w-full rounded border px-3 py-2"
+                    variant="outlined"
                     disabled={isLoading}
                     onChange={handlePromptChange}
                     placeholder="Prompt"
                     value={prompt}
                 />
                 {isLoading ? (
-                    <button
-                        className="focus:shadow-outline ml-2 rounded bg-blue-500 px-4 py-2 font-bold text-white focus:outline-none"
-                        disabled
-                    >
+                    <Button disabled>
                         <OpenAISpinner />
-                    </button>
+                    </Button>
                 ) : (
-                    <button
-                        className="focus:shadow-outline ml-2 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 focus:outline-none"
-                        disabled={prompt.length == 0}
-                    >
+                    <Button disabled={prompt.length == 0} variant="contained">
                         <AiOutlineSend />
-                    </button>
+                    </Button>
                 )}
             </form>
             {audio && <audio autoPlay={true} src={audio}></audio>}
