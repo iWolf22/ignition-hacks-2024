@@ -18,7 +18,7 @@ interface Message {
 }
 
 const OpenAIAssistant = ({
-    greeting = "I am a helpful chat assistant. How can I help you?",
+    greeting = 'I am a physiotherapist chat assistant. You can talk to me verbally with the keywords "Hey Mobi". How can I help you?',
 }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [threadId, setThreadId] = useState<null | string>(null);
