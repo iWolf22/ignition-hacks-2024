@@ -26,6 +26,7 @@
         "@tensorflow/tfjs-backend-webgpu": "^4.20.0",
         "@tensorflow/tfjs-converter": "^4.20.0",
         "@tensorflow/tfjs-core": "^4.20.0",
+        "lodash": "^4.17.21",
         "next": "14.2.5",
         "next-auth": "^4.24.7",
         "openai": "^4.56.0",
@@ -37,6 +38,7 @@
         "react-webcam": "^7.2.0"
     },
     "devDependencies": {
+        "@types/lodash": "^4.17.7",
         "@types/node": "^20",
         "@types/react": "^18",
         "@types/react-dom": "^18",
