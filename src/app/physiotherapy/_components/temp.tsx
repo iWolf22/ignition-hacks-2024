@@ -108,11 +108,11 @@ export default function PhysiotherapyPage({
             canvasRef.current.width = videoWidth;
             canvasRef.current.height = videoHeight;
 
-            const ctx = canvasRef.current.getContext("2d");
-
             // Make Detections
             if (activityState === "hand") {
                 const hand = await net.estimateHands(video);
+
+                const ctx = canvasRef.current.getContext("2d");
 
                 // Draw mesh
 
@@ -216,6 +216,8 @@ export default function PhysiotherapyPage({
             } else {
                 const body = await detector.estimatePoses(video);
 
+                const ctx = canvasRef.current.getContext("2d");
+
                 for (var j = 0; j < body[0].keypoints.length; j++) {
                     const x = videoWidth - body[0].keypoints[j].x;
                     const y = body[0].keypoints[j].y;
@@ -237,7 +239,7 @@ export default function PhysiotherapyPage({
                 () => {
                     detect(detector);
                 },
-                activityState === "hand" ? 50 : 200
+                activityState === "hand" ? 50 : 150
             );
         }
 
@@ -271,6 +273,11 @@ export default function PhysiotherapyPage({
                                 mirrored={true}
                                 ref={webcamRef}
                                 style={{
+                                    backgroundColor: "#2d9f52",
+                                    border: "5px 100px 0px 0px solid #2d9f52",
+                                    borderBottom: "0px",
+                                    borderRadius: "10px",
+                                    borderTop: "0px",
                                     height: 480,
                                     left: 0,
                                     marginLeft: "auto",
