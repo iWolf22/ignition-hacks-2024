@@ -19,7 +19,6 @@ import Features from "../ui-components/Features";
 import Footer from "../ui-components/Footer";
 import Hero from "../ui-components/Hero";
 import Highlights from "../ui-components/Highlights";
-import LogoCollection from "../ui-components/LogoCollection";
 import getLPTheme from "./getLPTheme";
 
 interface ToggleCustomThemeProps {
