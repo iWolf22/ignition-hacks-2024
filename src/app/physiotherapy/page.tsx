@@ -10,9 +10,9 @@
 // 8. Draw functions DONE
 
 import getLPTheme from "@/app/getLPTheme";
+import PhysiotherapyPage from "@/app/physiotherapy/_components/temp";
 import OpenAIAssistant from "@/components/OpenAIAssistant";
 import AppAppBar from "@/ui-components/AppAppBar";
-import PhysiotherapyPage from "@/app/physiotherapy/_components/temp";
 import "@mediapipe/hands";
 import "@mediapipe/pose";
 import * as tf from "@tensorflow/tfjs";
@@ -20,11 +20,11 @@ import "@tensorflow/tfjs-backend-webgpu";
 import "@tensorflow/tfjs-core";
 import * as handPoseDetection from "@tensorflow-models/hand-pose-detection";
 import * as handpose from "@tensorflow-models/handpose";
-import React, { useEffect, useRef } from "react";
-import Webcam from "react-webcam";
-
+import * as poseDetection from "@tensorflow-models/pose-detection";
 import { redirect } from "next/navigation";
 import { useSession } from "next-auth/react";
+import React, { useEffect, useRef, useState } from "react";
+import Webcam from "react-webcam";
 
 const lines = [
     ["wrist", "thumb_cmc"],
@@ -49,19 +49,12 @@ const lines = [
     ["pinky_finger_dip", "pinky_finger_tip"],
 ];
 
-export default async function Page() {
-    const { data: session } = useSession();
-
-    if (!session || !session.user) {
-        redirect("/api/auth/signin");
-    }
-
-    const webcamRef: any = useRef(null);
-    const canvasRef: any = useRef(null);
-import * as poseDetection from "@tensorflow-models/pose-detection";
-import { useEffect, useState } from "react";
-
 export default function Page() {
+    // const { data: session } = useSession();
+
+    // if (!session || !session.user) {
+    //     redirect("/api/auth/signin");
+    // }
     const [detectorState, setDetectorState]: any = useState();
 
     const [activityState, setActivityState] = useState<"arm" | "hand" | "legs">(
