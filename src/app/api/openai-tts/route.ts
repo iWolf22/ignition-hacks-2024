@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { openai } from "../../../utils/openai";
+import { OpenAI } from "openai";
 
 export const POST = async (request: NextRequest) => {
+    const openai = new OpenAI();
+
     const { text } = (await request.json()) as { text: string };
 
     const response = await openai.audio.speech.create({
