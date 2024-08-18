@@ -17,6 +17,9 @@ import AccessibilityNewIcon from "@mui/icons-material/AccessibilityNew";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import PanToolIcon from "@mui/icons-material/PanTool";
 import SportsIcon from "@mui/icons-material/Sports";
+import useWindowSize from "react-use/lib/useWindowSize";
+import Confetti from "react-confetti";
+
 import {
     Card,
     Container,
@@ -26,6 +29,7 @@ import {
     Stack,
     ThemeProvider,
     Typography,
+    Collapse,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import "@tensorflow/tfjs";
@@ -242,12 +246,18 @@ export default function PhysiotherapyPage({
                 if (distance !== -1) {
                     if (handState === "open" && distance <= 0.8) {
                         setHandState("close");
+                        if (audioRef.current) {
+                            audioRef.current.play();
+                        }
                     }
                     console.log(handState);
                     if (handState === "close" && distance >= 1.5) {
                         console.log("open");
                         setHandState("open");
                         setRepCounter((x) => (x += 1));
+                        if (audioRef.current) {
+                            audioRef.current.play();
+                        }
                     }
                 }
             } else {
@@ -309,9 +319,15 @@ export default function PhysiotherapyPage({
                     if (handState === "open" && delta > 600) {
                         setHandState("close");
                         setRepCounter((x) => (x += 1));
+                        if (audioRef.current) {
+                            audioRef.current.play();
+                        }
                     }
                     if (handState === "close" && delta < 200) {
                         setHandState("open");
+                        if (audioRef.current) {
+                            audioRef.current.play();
+                        }
                     }
                 }
             }
@@ -351,6 +367,10 @@ export default function PhysiotherapyPage({
     useEffect(() => {
         document.body.style.overflow = "hidden";
     }, []);
+
+    const audioRef: any = useRef();
+
+    const { width, height } = useWindowSize();
 
     return (
         <div>
@@ -400,6 +420,12 @@ export default function PhysiotherapyPage({
                                     width: 680,
                                 }}
                             />
+                            <Collapse
+                                in={repCounter % 5 === 0 && repCounter !== 0}
+                            >
+                                <Confetti width={1580} height={1020} />
+                            </Collapse>
+                            <audio ref={audioRef} src="/sound.mp3" />
                         </div>
                         <div style={{ paddingLeft: "32px", width: "100%" }}>
                             <Card
