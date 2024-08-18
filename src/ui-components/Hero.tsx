@@ -7,8 +7,11 @@ import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import { signIn, useSession } from 'next-auth/react';
 
 export default function Hero() {
+  const { data: session } = useSession();
+
   return (
     <Box
       id="hero"
@@ -62,6 +65,32 @@ export default function Hero() {
           >
             Discover a new, efficient physiotherapy.
           </Typography>
+          {!session ? (
+          <Stack
+            direction={{ xs: 'column', sm: 'row' }}
+            alignSelf="center"
+            spacing={1}
+            useFlexGap
+            onClick={() => signIn(undefined, { callbackUrl: '/physiotherapy' })}
+            sx={{ pt: 2, width: { xs: '100%', sm: 'auto' } }}
+          >
+            <Button variant="contained" color="primary">
+              Physiotherapy Page
+            </Button>
+          </Stack>
+          ) : (
+            <Stack
+            direction={{ xs: 'column', sm: 'row' }}
+            alignSelf="center"
+            spacing={1}
+            useFlexGap
+            sx={{ pt: 2, width: { xs: '100%', sm: 'auto' } }}
+          >
+            <Button variant="contained" color="primary" href="/physiotherapy">
+              Physiotherapy Page
+            </Button>
+          </Stack>
+          )}
         </Stack>
         <Box
           id="image"
