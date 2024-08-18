@@ -1,6 +1,6 @@
 # Mobility+
 
-https://www.youtube.com/watch?v=XCje_wdTcQA
+https://github.com/user-attachments/assets/79006ee7-85aa-4780-9f67-011e8fa38380
 
 ## 💡 Inspiration
 If you've ever been to a physiotherapist's office, you know that the bulk of your time with the physiotherapist is spent correcting your bad form and relearning proper form. At Mobility+, our aim is to drastically reduce the mundane work of physiotherapists like correcting posture, giving generally accepted medical advice, and coaching through exercises by delegating it to technology. We want to free physiotherapists to be able to take more patients, operate more efficiently, and focus on higher level tasks - all while saving patients time and money to live their lives freely.
