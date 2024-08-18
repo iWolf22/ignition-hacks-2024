@@ -50,11 +50,11 @@ const lines = [
 ];
 
 export default function Page() {
-    // const { data: session } = useSession();
+    const { data: session } = useSession();
 
-    // if (!session || !session.user) {
-    //     redirect("/api/auth/signin");
-    // }
+    if (!session || !session.user) {
+        redirect("/api/auth/signin");
+    }
     const [detectorState, setDetectorState]: any = useState();
 
     const [activityState, setActivityState] = useState<"arm" | "hand" | "legs">(
