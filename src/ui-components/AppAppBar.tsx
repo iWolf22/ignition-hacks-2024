@@ -47,6 +47,8 @@ function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
         }
     };
 
+    const { data: session } = useSession();
+
   return (
     <div>
       <AppBar

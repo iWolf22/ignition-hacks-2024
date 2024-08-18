@@ -26,8 +26,8 @@ export default async function RootLayout({
         <html lang="en">
             <body className={inter.className}>
               <SessionProvider session={session}>
-                <AppRouterCacheProvider>{children}</SessionProvider>
-            </AppRouterCacheProvider>
+                <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
+              </SessionProvider>
             </body>
         </html>
     );
