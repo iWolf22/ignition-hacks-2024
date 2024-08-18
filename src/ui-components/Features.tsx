@@ -16,27 +16,27 @@ import ViewQuiltRoundedIcon from '@mui/icons-material/ViewQuiltRounded';
 const items = [
   {
     icon: <ViewQuiltRoundedIcon />,
-    title: 'Dashboard',
+    title: 'Exercises',
     description:
-      'This item could provide a snapshot of the most important metrics or data points related to the product.',
-    imageLight: 'url("/static/images/templates/templates-images/dash-light.png")',
-    imageDark: 'url("/static/images/templates/templates-images/dash-dark.png")',
+      'Mobility+ provides several exercises to help you recover from injuries and improve your mobility.',
+    imageLight: 'url("https://cdn.discordapp.com/attachments/1274426077795844176/1274474355383992410/image.png?ex=66c2623c&is=66c110bc&hm=2eaae0fba93faf4bf176a7789486a752e2cfb5b65cc000095b96ee31ab5e8149&")',
+    imageDark: 'url("https://cdn.discordapp.com/attachments/1274426077795844176/1274474355383992410/image.png?ex=66c2623c&is=66c110bc&hm=2eaae0fba93faf4bf176a7789486a752e2cfb5b65cc000095b96ee31ab5e8149&")',
   },
   {
     icon: <EdgesensorHighRoundedIcon />,
-    title: 'Mobile integration',
+    title: 'ML Rep Detection',
     description:
-      'This item could provide information about the mobile app version of the product.',
-    imageLight: 'url("/static/images/templates/templates-images/mobile-light.png")',
-    imageDark: 'url("/static/images/templates/templates-images/mobile-dark.png")',
+      'Advanced machine learning algorithms are used to detect your reps, and provide feedback on your form.',
+    imageLight: 'url("https://cdn.discordapp.com/attachments/1274426077795844176/1274600252682403840/image.png?ex=66c2d77d&is=66c185fd&hm=58d864a663a133e982f901479b8e0357364ff85c9d97f5de5375a3480741caf8&")',
+    imageDark: 'url("https://cdn.discordapp.com/attachments/1274426077795844176/1274600252682403840/image.png?ex=66c2d77d&is=66c185fd&hm=58d864a663a133e982f901479b8e0357364ff85c9d97f5de5375a3480741caf8&")',
   },
   {
     icon: <DevicesRoundedIcon />,
-    title: 'Available on all platforms',
+    title: 'AI Assistant',
     description:
-      'This item could let users know the product is available on all platforms, such as web, mobile, and desktop.',
-    imageLight: 'url("/static/images/templates/templates-images/devices-light.png")',
-    imageDark: 'url("/static/images/templates/templates-images/devices-dark.png")',
+      'AI voice assistant is ready to guide you through your exercises',
+    imageLight: 'url("https://cdn.discordapp.com/attachments/1274426077795844176/1274600659936743486/image.png?ex=66c2d7de&is=66c1865e&hm=3729af1995d49b7f2e204ddeddd69d4213e475b2ae5f2cfae804121cb513a424&")',
+    imageDark: 'url("https://cdn.discordapp.com/attachments/1274426077795844176/1274600659936743486/image.png?ex=66c2d7de&is=66c1865e&hm=3729af1995d49b7f2e204ddeddd69d4213e475b2ae5f2cfae804121cb513a424&")',
   },
 ];
 
@@ -55,16 +55,15 @@ export default function Features() {
         <Grid item xs={12} md={6}>
           <div>
             <Typography component="h2" variant="h4" color="text.primary">
-              Product features
+              What is Mobility+?
             </Typography>
             <Typography
               variant="body1"
               color="text.secondary"
               sx={{ mb: { xs: 2, sm: 4 } }}
             >
-              Here you can provide a brief overview of the key features of the
-              product. For example, you could list the number of features, the types
-              of features, add-ons, or the benefits of the features.
+              Mobility+ is a powerful physiotherapy tool that allows you to practice physio exercises at home.
+              It uses advanced Machine Learning algorithms to track your motion and verify that you are doing the exercises correctly.
             </Typography>
           </div>
           <Grid container item gap={1} sx={{ display: { xs: 'auto', sm: 'none' } }}>

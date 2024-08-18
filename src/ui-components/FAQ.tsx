@@ -61,9 +61,9 @@ export default function FAQ() {
               gutterBottom
               sx={{ maxWidth: { sm: '100%', md: '70%' } }}
             >
-              You can reach our customer support team by emailing
-              <Link> support@email.com </Link>
-              or calling our toll-free number. We&apos;re here to assist you
+              You can reach me by emailing
+              <Link> he.patrick2005@gmail.com. </Link>
+              I may not respond
               promptly.
             </Typography>
           </AccordionDetails>
@@ -87,9 +87,7 @@ export default function FAQ() {
               gutterBottom
               sx={{ maxWidth: { sm: '100%', md: '70%' } }}
             >
-              Absolutely! We offer a hassle-free return policy. If you&apos;re not
-              completely satisfied, you can return the product within [number of
-              days] days for a full refund or exchange.
+              No. It's free.
             </Typography>
           </AccordionDetails>
         </Accordion>
@@ -112,9 +110,7 @@ export default function FAQ() {
               gutterBottom
               sx={{ maxWidth: { sm: '100%', md: '70%' } }}
             >
-              Our product distinguishes itself through its adaptability, durability,
-              and innovative features. We prioritize user satisfaction and
-              continually strive to exceed expectations in every aspect.
+              Instead of going through the hassle and expense of hiring a physiotherapist, you can use our product to relieve pain and improve mobility in the comfort of your own home. Our product is designed to provide feedback, making it an excellent alternative to traditional physiotherapy.
             </Typography>
           </AccordionDetails>
         </Accordion>
@@ -137,10 +133,7 @@ export default function FAQ() {
               gutterBottom
               sx={{ maxWidth: { sm: '100%', md: '70%' } }}
             >
-              Yes, our product comes with a [length of warranty] warranty. It covers
-              defects in materials and workmanship. If you encounter any issues
-              covered by the warranty, please contact our customer support for
-              assistance.
+              IT'S FREE!!!
             </Typography>
           </AccordionDetails>
         </Accordion>
