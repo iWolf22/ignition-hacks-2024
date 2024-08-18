@@ -225,11 +225,11 @@ function AppAppBar({ mode, toggleColorMode, setActivityState }: AppAppBarProps) 
                     color="success" // Green color scheme
                     variant="text"
                     size="small"
-                    onClick={() => signOut()}
+                    onClick={() => signOut({ callbackUrl: '/', redirect:true })}
                   >
                     Sign out
                   </Button>
-                  {!url.includes('physiotherapy') ? (
+                  {/* {!url.includes('physiotherapy') ? (
                     <Button
                       color="success" // Green color scheme
                       variant="text"
@@ -238,7 +238,7 @@ function AppAppBar({ mode, toggleColorMode, setActivityState }: AppAppBarProps) 
                     >
                       Physio Page
                     </Button>
-                  ) : (undefined)}
+                  ) : (undefined)} */}
                 </>
               ) : (
                 <>
