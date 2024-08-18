@@ -75,7 +75,7 @@ export default function Hero() {
             sx={{ pt: 2, width: { xs: '100%', sm: 'auto' } }}
           >
             <Button variant="contained" color="primary">
-              Physiotherapy Page
+              Start Here: Physiotherapy Unlocked
             </Button>
           </Stack>
           ) : (
