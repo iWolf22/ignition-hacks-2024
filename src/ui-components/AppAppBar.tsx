@@ -157,7 +157,7 @@ function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
                     color="success" // Green color scheme
                     variant="contained"
                     size="small"
-                    onClick={() => signIn()}
+                    onClick={() => signIn(undefined, { callbackUrl: '/physiotherapy' })}
                   >
                     Sign in
                   </Button>
