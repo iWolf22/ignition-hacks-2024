@@ -12,14 +12,21 @@
 import getLPTheme from "@/app/getLPTheme";
 import AppAppBar from "@/ui-components/AppAppBar";
 import "@mediapipe/hands";
+import AccessibilityNewIcon from "@mui/icons-material/AccessibilityNew";
+import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
+import PanToolIcon from "@mui/icons-material/PanTool";
+import SportsIcon from "@mui/icons-material/Sports";
 import {
+    Card,
     Container,
     createTheme,
     CssBaseline,
     PaletteMode,
     Stack,
     ThemeProvider,
+    Typography,
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import "@tensorflow/tfjs";
 import "@tensorflow/tfjs-backend-webgl";
 import * as tf from "@tensorflow/tfjs-backend-webgpu";
@@ -56,6 +63,35 @@ const lines = [
     ["pinky_finger_mcp", "pinky_finger_pip"],
     ["pinky_finger_pip", "pinky_finger_dip"],
     ["pinky_finger_dip", "pinky_finger_tip"],
+];
+
+const bodyLines = [
+    [20, 18],
+    [18, 16],
+    [16, 22],
+    [20, 22],
+    [16, 14],
+    [14, 12],
+    [12, 11],
+    [11, 13],
+    [13, 15],
+    [15, 21],
+    [21, 19],
+    [19, 17],
+    [17, 15],
+    [11, 23],
+    [12, 24],
+    [24, 23],
+    [23, 25],
+    [25, 27],
+    [27, 29],
+    [27, 31],
+    [29, 31],
+    [24, 26],
+    [26, 28],
+    [28, 32],
+    [28, 30],
+    [32, 30],
 ];
 
 const fingerTips = [
@@ -224,8 +260,58 @@ export default function PhysiotherapyPage({
 
                     ctx.beginPath();
                     ctx.arc(x, y, 4, 0, 2 * Math.PI);
-                    ctx.fillStyle = "red";
+                    if (handState === "open") {
+                        ctx.fillStyle = "red";
+                    } else {
+                        ctx.fillStyle = "green";
+                    }
                     ctx.fill();
+                }
+
+                for (var j = 0; j < bodyLines.length; j++) {
+                    ctx.beginPath();
+                    ctx.moveTo(
+                        videoWidth - body[0].keypoints[bodyLines[j][0]].x,
+                        body[0].keypoints[bodyLines[j][0]].y
+                    );
+                    ctx.lineTo(
+                        videoWidth - body[0].keypoints[bodyLines[j][1]].x,
+                        body[0].keypoints[bodyLines[j][1]].y
+                    );
+                    ctx.stroke();
+                }
+
+                if (
+                    body[0].keypoints[16].score > 0.6 &&
+                    body[0].keypoints[15].score > 0.6 &&
+                    body[0].keypoints[24].score > 0.6 &&
+                    body[0].keypoints[23].score > 0.6
+                ) {
+                    const delta =
+                        Math.sqrt(
+                            (body[0].keypoints[16].x -
+                                body[0].keypoints[24].x) **
+                                2 +
+                                (body[0].keypoints[16].y -
+                                    body[0].keypoints[24].y) **
+                                    2
+                        ) +
+                        Math.sqrt(
+                            (body[0].keypoints[15].x -
+                                body[0].keypoints[23].x) **
+                                2 +
+                                (body[0].keypoints[15].y -
+                                    body[0].keypoints[23].y) **
+                                    2
+                        );
+
+                    if (handState === "open" && delta > 600) {
+                        setHandState("close");
+                        setRepCounter((x) => (x += 1));
+                    }
+                    if (handState === "close" && delta < 200) {
+                        setHandState("open");
+                    }
                 }
             }
         }
@@ -306,40 +392,88 @@ export default function PhysiotherapyPage({
                                 }}
                             />
                         </div>
-                        <div>
-                            Stats: {repCounter}
-                            <br />
-                            Hand State: {handState}
-                            <br />
-                            Delta Hand: {Math.round(deltaHand * 1000) / 1000}
-                            {/* <br />
-                            {data &&
-                                (data as any).map((hand: any, i: any) => {
-                                    return (
-                                        <div key={i}>
-                                            {hand["keypoints"] &&
-                                                (hand["keypoints"] as any).map(
-                                                    (val: any, j: any) => {
-                                                        return (
-                                                            <div key={j}>
-                                                                {JSON.stringify(
-                                                                    {
-                                                                        n: val.name,
-                                                                        x: Math.round(
-                                                                            val.x
-                                                                        ),
-                                                                        y: Math.round(
-                                                                            val.y
-                                                                        ),
-                                                                    }
-                                                                )}
-                                                            </div>
-                                                        );
-                                                    }
-                                                )}
-                                        </div>
-                                    );
-                                })} */}
+                        <div style={{ paddingLeft: "32px", width: "100%" }}>
+                            <Card
+                                sx={(theme) => ({
+                                    background:
+                                        theme.palette.mode === "light"
+                                            ? "#e9ffe9"
+                                            : "#05280a",
+                                    borderColor:
+                                        theme.palette.mode === "light"
+                                            ? "#d4e5e1"
+                                            : "#1b3726",
+                                    boxShadow:
+                                        theme.palette.mode === "light"
+                                            ? `0 0 1px rgba(0, 255, 0, 0.1), 1px 1.5px 2px -1px rgba(0, 255, 0, 0.15), 4px 4px 12px -2.5px rgba(0, 255, 0, 0.15)` // Green shadow
+                                            : "0 0 1px rgba(0, 80, 0, 0.7), 1px 1.5px 2px -1px rgba(0, 80, 0, 0.65), 4px 4px 12px -2.5px rgba(0, 80, 0, 0.65)", // Dark green shadow
+                                })}
+                            >
+                                <div
+                                    style={{
+                                        alignItems: "center",
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        margin: "16px",
+                                        width: "calc(100% - 32px)",
+                                    }}
+                                >
+                                    <div>
+                                        {activityState === "arm" ? (
+                                            <span
+                                                style={{
+                                                    alignItems: "center",
+                                                    display: "flex",
+                                                    gap: "5px",
+                                                }}
+                                            >
+                                                <AccessibilityNewIcon /> Arm
+                                                Raises
+                                            </span>
+                                        ) : (
+                                            <span
+                                                style={{
+                                                    alignItems: "center",
+                                                    display: "flex",
+                                                    gap: "5px",
+                                                }}
+                                            >
+                                                <PanToolIcon /> Hand Squeezes
+                                            </span>
+                                        )}
+                                    </div>
+                                    <div>
+                                        <span
+                                            style={{
+                                                alignItems: "center",
+                                                display: "flex",
+                                                gap: "5px",
+                                            }}
+                                        >
+                                            <FitnessCenterIcon /> Reps:{" "}
+                                            {repCounter}
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span
+                                            style={{
+                                                alignItems: "center",
+                                                display: "flex",
+                                                gap: "5px",
+                                            }}
+                                        >
+                                            <SportsIcon />{" "}
+                                            {activityState === "arm"
+                                                ? handState === "open"
+                                                    ? "Raise arms"
+                                                    : "Lower arms"
+                                                : handState === "open"
+                                                  ? "Squeeze hand"
+                                                  : "Open hand"}
+                                        </span>
+                                    </div>
+                                </div>
+                            </Card>
                         </div>
                     </Stack>
                 </Container>
