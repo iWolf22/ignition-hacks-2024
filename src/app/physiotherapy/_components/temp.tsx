@@ -10,6 +10,7 @@
 // 8. Draw functions DONE
 
 import getLPTheme from "@/app/getLPTheme";
+import OpenAIAssistant from "@/components/OpenAIAssistant";
 import AppAppBar from "@/ui-components/AppAppBar";
 import "@mediapipe/hands";
 import AccessibilityNewIcon from "@mui/icons-material/AccessibilityNew";
@@ -41,7 +42,6 @@ import React, {
     useState,
 } from "react";
 import Webcam from "react-webcam";
-import OpenAIAssistant from "@/components/OpenAIAssistant";
 
 const lines = [
     ["wrist", "thumb_cmc"],
@@ -485,9 +485,9 @@ export default function PhysiotherapyPage({
                             </Card>
                             <Card
                                 style={{
+                                    height: "390px",
                                     marginTop: "32px",
                                     padding: "16px",
-                                    height: "390px",
                                 }}
                                 sx={(theme) => ({
                                     background:

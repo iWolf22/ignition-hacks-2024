@@ -89,13 +89,10 @@ export default function Page() {
     });
 
     return (
-        <div>
-            <PhysiotherapyPage
-                activityState={activityState}
-                detector={detectorState}
-                setActivityState={setActivityState}
-            />
-            <OpenAIAssistant />
-        </div>
+        <PhysiotherapyPage
+            activityState={activityState}
+            detector={detectorState}
+            setActivityState={setActivityState}
+        />
     );
 }

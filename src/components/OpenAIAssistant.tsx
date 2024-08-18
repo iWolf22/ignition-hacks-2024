@@ -1,7 +1,7 @@
 "use client";
 
-import { List, TextField, Button } from "@mui/material";
-import _ from "lodash";
+import useDebounce from "@/utils/debouncer";
+import { Button, List, TextField } from "@mui/material";
 import { AssistantStream } from "openai/lib/AssistantStream";
 import { useEffect, useRef, useState } from "react";
 import { AiOutlineRobot, AiOutlineSend, AiOutlineUser } from "react-icons/ai";
@@ -145,23 +145,23 @@ const OpenAIAssistant = ({
         });
     }
 
-    const debouncedVoiceSubmit = _.debounce(voiceSubmit, 2000);
+    const debouncedTranscript = useDebounce(transcript, 2000);
 
     useEffect(() => {
-        const index = transcript.indexOf("hey Moby");
+        const index = debouncedTranscript.indexOf("hey Moby");
         console.log(index);
 
         if (index === -1) {
             return;
         }
 
-        const filteredTranscript = transcript.substring(index + 9);
+        const filteredTranscript = debouncedTranscript.substring(index + 9);
         console.log(filteredTranscript);
 
         if (filteredTranscript) {
-            debouncedVoiceSubmit(filteredTranscript);
+            voiceSubmit(filteredTranscript);
         }
-    }, [transcript]);
+    }, [debouncedTranscript]);
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -267,17 +267,17 @@ const OpenAIAssistant = ({
             style={{
                 display: "flex",
                 flexDirection: "column",
-                justifyContent: "space-between",
                 height: "100%",
+                justifyContent: "space-between",
             }}
         >
             <List
                 sx={{
-                    width: "100%",
-                    position: "relative",
-                    overflow: "auto",
-                    maxHeight: 330,
                     "& ul": { padding: 0 },
+                    maxHeight: 330,
+                    overflow: "auto",
+                    position: "relative",
+                    width: "100%",
                 }}
             >
                 <OpenAIAssistantMessage message={greetingMessage} />
@@ -289,16 +289,16 @@ const OpenAIAssistant = ({
                 )}
             </List>
             <form
-                style={{ display: "flex", width: "100%", gap: "10px" }}
                 onSubmit={handleSubmit}
+                style={{ display: "flex", gap: "10px", width: "100%" }}
             >
                 <TextField
                     autoFocus
-                    variant="outlined"
                     disabled={isLoading}
                     onChange={handlePromptChange}
-                    placeholder="Prompt"
+                    placeholder='Type here or say "Hey Moby"!'
                     value={prompt}
+                    variant="outlined"
                 />
                 {isLoading ? (
                     <Button disabled>
