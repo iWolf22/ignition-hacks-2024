@@ -29,6 +29,9 @@ import * as handpose from "@tensorflow-models/handpose";
 import React, { useEffect, useRef } from "react";
 import Webcam from "react-webcam";
 
+import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
+
 const lines = [
     ["wrist", "thumb_cmc"],
     ["thumb_cmc", "thumb_mcp"],
@@ -52,7 +55,12 @@ const lines = [
     ["pinky_finger_dip", "pinky_finger_tip"],
 ];
 
-export default function Page() {
+export default async function Page() {
+    const session = await getServerSession();
+    if (!session || !session.user) {
+        redirect("/api/auth/signin");
+    }
+
     const webcamRef: any = useRef(null);
     const canvasRef: any = useRef(null);
 
