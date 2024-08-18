@@ -348,6 +348,10 @@ export default function PhysiotherapyPage({
         setShowCustomTheme((prev) => !prev);
     };
 
+    useEffect(() => {
+        document.body.style.overflow = "hidden";
+    }, []);
+
     return (
         <div>
             <ThemeProvider theme={showCustomTheme ? LPtheme : defaultTheme}>

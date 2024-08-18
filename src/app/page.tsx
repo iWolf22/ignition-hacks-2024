@@ -80,6 +80,10 @@ export default function LandingPage() {
         setShowCustomTheme((prev) => !prev);
     };
 
+    React.useEffect(() => {
+        document.body.style.overflow = "scroll";
+    }, []);
+
     return (
         <>
             <Head>
