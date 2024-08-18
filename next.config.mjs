@@ -6,7 +6,6 @@ const nextConfig = {
         ignoreDuringBuilds: true,
     },
     reactStrictMode: false,
-    transpilePackages: ["three"],
 };
 
 export default nextConfig;
