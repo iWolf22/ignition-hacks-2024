@@ -149,6 +149,48 @@ function AppAppBar({ mode, toggleColorMode, setActivityState }: AppAppBarProps) 
                   </>
                 ) : (
                   <>
+                  <Link href="/" style={{ textDecoration: 'none' }}>
+                    <MenuItem
+                      sx={{ py: '6px', px: '12px' }}
+                    >
+                      <Typography variant="body2" color="text.primary">
+                        Home
+                      </Typography>
+                    </MenuItem>
+                  </Link>
+                  <Link href="/#features" style={{ textDecoration: 'none' }}>
+                    <MenuItem
+                      href="/"
+                      onClick={() => scrollToSection('testimonials')}
+                      sx={{ py: '6px', px: '12px' }}
+                    >
+                      <Typography variant="body2" color="text.primary">
+                        Features
+                      </Typography>
+                    </MenuItem>
+                  </Link>
+                  <Link href="/#testimonials" style={{ textDecoration: 'none' }}>
+                    <MenuItem
+                      href="/"
+                      onClick={() => scrollToSection('testimonials')}
+                      sx={{ py: '6px', px: '12px' }}
+                    >
+                      <Typography variant="body2" color="text.primary">
+                        Testimonials
+                      </Typography>
+                    </MenuItem>
+                  </Link>
+                  <Link href="/#faq" style={{ textDecoration: 'none' }}>
+                    <MenuItem
+                      href="/"
+                      onClick={() => scrollToSection('testimonials')}
+                      sx={{ py: '6px', px: '12px' }}
+                    >
+                      <Typography variant="body2" color="text.primary">
+                        FAQ
+                      </Typography>
+                    </MenuItem>
+                  </Link>
                     <MenuItem
                       onClick={() => setActivityState && setActivityState("hand")}
                       sx={{ py: '6px', px: '12px' }}
