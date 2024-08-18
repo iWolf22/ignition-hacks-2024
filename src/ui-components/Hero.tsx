@@ -101,8 +101,8 @@ export default function Hero() {
             width: '100%',
             backgroundImage:
               theme.palette.mode === 'light'
-                ? 'url("https://cdn.discordapp.com/attachments/1274426077795844176/1274443562959896658/image.png?ex=66c2458f&is=66c0f40f&hm=8e3fb36fa77e556e8ae11587540ee285716211baccb8caca6c61f8668a0ccdad&")'
-                : 'url("https://cdn.discordapp.com/attachments/1274426077795844176/1274443562959896658/image.png?ex=66c2458f&is=66c0f40f&hm=8e3fb36fa77e556e8ae11587540ee285716211baccb8caca6c61f8668a0ccdad&")',
+                ? 'url("https://cdn.discordapp.com/attachments/1274426077795844176/1274622548860080169/image.png?ex=66c2ec40&is=66c19ac0&hm=e5c3bb505d9340656be464932cf18eaeef9e677edb31d131f7678367116872c3&")'
+                : 'url("https://cdn.discordapp.com/attachments/1274426077795844176/1274622548860080169/image.png?ex=66c2ec40&is=66c19ac0&hm=e5c3bb505d9340656be464932cf18eaeef9e677edb31d131f7678367116872c3&")',
             backgroundSize: 'cover',
             borderRadius: '10px',
             outline: '1px solid',
