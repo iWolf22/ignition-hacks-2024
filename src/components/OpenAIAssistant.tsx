@@ -1,5 +1,6 @@
 "use client";
 
+import _ from "lodash";
 import { AssistantStream } from "openai/lib/AssistantStream";
 import { useEffect, useRef, useState } from "react";
 import { AiOutlineRobot, AiOutlineSend, AiOutlineUser } from "react-icons/ai";
@@ -63,6 +64,103 @@ const OpenAIAssistant = ({
         const url = URL.createObjectURL(blob);
         setAudio(url);
     }
+
+    async function voiceSubmit(filteredTranscript: string) {
+        // clear streaming message
+        setStreamingMessage({
+            content: "_Thinking..._",
+            createdAt: new Date(),
+            id: "Thinking...",
+            role: "assistant",
+        });
+
+        // add busy indicator
+        setIsLoading(true);
+
+        // add user message to list of messages
+        messageId.current++;
+        setMessages([
+            ...messages,
+            {
+                content: filteredTranscript,
+                createdAt: new Date(),
+                id: messageId.current.toString(),
+                role: "user",
+            },
+        ]);
+        resetTranscript();
+
+        // post new message to server and stream OpenAI Assistant response
+        const response = await fetch("/api/openai-assistant", {
+            body: JSON.stringify({
+                assistantId: "",
+                content: filteredTranscript,
+                threadId: threadId,
+            }),
+            method: "POST",
+        });
+
+        if (!response.body) {
+            return;
+        }
+        const runner = AssistantStream.fromReadableStream(response.body);
+
+        runner.on("messageCreated", (message) => {
+            setThreadId(message.thread_id);
+        });
+
+        runner.on("textDelta", (_delta, contentSnapshot) => {
+            const newStreamingMessage = {
+                ...streamingMessage,
+                content: contentSnapshot.value,
+            };
+            setStreamingMessage(newStreamingMessage);
+        });
+
+        runner.on("messageDone", (message) => {
+            // get final message content
+            const finalContent =
+                message.content[0].type == "text"
+                    ? message.content[0].text.value
+                    : "";
+
+            // add assistant message to list of messages
+            messageId.current++;
+            const newMessage = {
+                content: finalContent,
+                createdAt: new Date(),
+                id: messageId.current.toString(),
+                role: "assistant",
+            };
+            setMessages((prevMessages) => [...prevMessages, newMessage]);
+
+            // remove busy indicator
+            setIsLoading(false);
+            getAudio(newMessage);
+        });
+
+        runner.on("error", (error) => {
+            console.error(error);
+        });
+    }
+
+    const debouncedVoiceSubmit = _.debounce(voiceSubmit, 2000);
+
+    useEffect(() => {
+        const index = transcript.indexOf("hey Moby");
+        console.log(index);
+
+        if (index === -1) {
+            return;
+        }
+
+        const filteredTranscript = transcript.substring(index + 9);
+        console.log(filteredTranscript);
+
+        if (filteredTranscript) {
+            debouncedVoiceSubmit(filteredTranscript);
+        }
+    }, [transcript]);
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -176,7 +274,7 @@ const OpenAIAssistant = ({
                     className="text-gray-70 w-full rounded border px-3 py-2"
                     disabled={isLoading}
                     onChange={handlePromptChange}
-                    placeholder="prompt"
+                    placeholder="Prompt"
                     value={prompt}
                 />
                 {isLoading ? (
@@ -196,7 +294,6 @@ const OpenAIAssistant = ({
                 )}
             </form>
             {audio && <audio autoPlay={true} src={audio}></audio>}
-            <p>{transcript}</p>
         </div>
     );
 };
