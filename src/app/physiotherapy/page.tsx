@@ -30,7 +30,7 @@ import React, { useEffect, useRef } from "react";
 import Webcam from "react-webcam";
 
 import { redirect } from "next/navigation";
-import { getServerSession } from "next-auth";
+import { useSession } from "next-auth/react";
 
 const lines = [
     ["wrist", "thumb_cmc"],
@@ -56,7 +56,8 @@ const lines = [
 ];
 
 export default async function Page() {
-    const session = await getServerSession();
+    const { data: session } = useSession();
+
     if (!session || !session.user) {
         redirect("/api/auth/signin");
     }
