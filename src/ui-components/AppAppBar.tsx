@@ -9,11 +9,14 @@ import Drawer from "@mui/material/Drawer";
 import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import { useState } from "react";
+import { useEffect } from "react";
 import * as React from "react";
 
 import ToggleColorMode from "./ToggleColorMode";
 import Link from 'next/link';
 import { signIn, signOut, useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 const logoStyle = {
     cursor: "pointer",
@@ -22,12 +25,21 @@ const logoStyle = {
 };
 
 interface AppAppBarProps {
-    mode: PaletteMode;
-    toggleColorMode: () => void;
+  mode: PaletteMode;
+  toggleColorMode: () => void;
+  setActivityState?: React.Dispatch<React.SetStateAction<"arm" | "hand" | "legs">>;
 }
 
-function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
+function AppAppBar({ mode, toggleColorMode, setActivityState }: AppAppBarProps) {
     const [open, setOpen] = React.useState(false);
+    const [url, setUrl] = useState('');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setUrl(window.location.href);  // Get the full URL
+    }
+  }, []);
+  console.log(url);
 
     const toggleDrawer = (newOpen: boolean) => () => {
         setOpen(newOpen);
@@ -100,38 +112,61 @@ function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
                 alt="logo of sitemark"
               />
               <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                <MenuItem
-                  onClick={() => scrollToSection('hero')}
-                  sx={{ py: '6px', px: '12px' }}
-                >
-                  <Typography variant="body2" color="text.primary">
-                    Home
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                  onClick={() => scrollToSection('features')}
-                  sx={{ py: '6px', px: '12px' }}
-                >
-                  <Typography variant="body2" color="text.primary">
-                    Features
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                  onClick={() => scrollToSection('testimonials')}
-                  sx={{ py: '6px', px: '12px' }}
-                >
-                  <Typography variant="body2" color="text.primary">
-                    Testimonials
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                  onClick={() => scrollToSection('faq')}
-                  sx={{ py: '6px', px: '12px' }}
-                >
-                  <Typography variant="body2" color="text.primary">
-                    FAQ
-                  </Typography>
-                </MenuItem>
+                {!url.includes('physiotherapy') ? (
+                  <>
+                    <MenuItem
+                      onClick={() => scrollToSection('hero')}
+                      sx={{ py: '6px', px: '12px' }}
+                    >
+                      <Typography variant="body2" color="text.primary">
+                        Home
+                      </Typography>
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => scrollToSection('features')}
+                      sx={{ py: '6px', px: '12px' }}
+                    >
+                      <Typography variant="body2" color="text.primary">
+                        Features
+                      </Typography>
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => scrollToSection('testimonials')}
+                      sx={{ py: '6px', px: '12px' }}
+                    >
+                      <Typography variant="body2" color="text.primary">
+                        Testimonials
+                      </Typography>
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => scrollToSection('faq')}
+                      sx={{ py: '6px', px: '12px' }}
+                    >
+                      <Typography variant="body2" color="text.primary">
+                        FAQ
+                      </Typography>
+                    </MenuItem>
+                  </>
+                ) : (
+                  <>
+                    <MenuItem
+                      onClick={() => setActivityState && setActivityState("hand")}
+                      sx={{ py: '6px', px: '12px' }}
+                    >
+                      <Typography variant="body2" color="text.primary">
+                        Hand
+                      </Typography>
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => setActivityState && setActivityState("arm")}
+                      sx={{ py: '6px', px: '12px' }}
+                    >
+                      <Typography variant="body2" color="text.primary">
+                        Arm
+                      </Typography>
+                    </MenuItem>
+                  </>
+                )}
               </Box>
             </Box>
             <Box
@@ -143,14 +178,26 @@ function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
             >
               <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
               {session ? (
-                <Button
-                  color="success" // Green color scheme
-                  variant="text"
-                  size="small"
-                  onClick={() => signOut()}
-                >
-                  Sign out
-                </Button>
+                <>
+                  <Button
+                    color="success" // Green color scheme
+                    variant="text"
+                    size="small"
+                    onClick={() => signOut()}
+                  >
+                    Sign out
+                  </Button>
+                  {!url.includes('physiotherapy') ? (
+                    <Button
+                      color="success" // Green color scheme
+                      variant="text"
+                      size="small"
+                      href="/physiotherapy"
+                    >
+                      Physio Page
+                    </Button>
+                  ) : (undefined)}
+                </>
               ) : (
                 <>
                   <Button

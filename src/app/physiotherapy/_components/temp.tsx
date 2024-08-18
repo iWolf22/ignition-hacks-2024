@@ -265,7 +265,7 @@ export default function PhysiotherapyPage({
         <div>
             <ThemeProvider theme={showCustomTheme ? LPtheme : defaultTheme}>
                 <CssBaseline />
-                <AppAppBar mode={mode} toggleColorMode={toggleColorMode} />
+                <AppAppBar mode={mode} toggleColorMode={toggleColorMode} setActivityState={setActivityState}/>
                 <Container style={{ marginTop: "120px" }}>
                     <Stack direction="row">
                         <div>

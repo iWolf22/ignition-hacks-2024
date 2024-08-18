@@ -58,7 +58,7 @@ export default function Page() {
     const [detectorState, setDetectorState]: any = useState();
 
     const [activityState, setActivityState] = useState<"arm" | "hand" | "legs">(
-        "arm"
+        "hand"
     );
 
     useEffect(() => {
