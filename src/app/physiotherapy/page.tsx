@@ -12,17 +12,11 @@
 import getLPTheme from "@/app/getLPTheme";
 import OpenAIAssistant from "@/components/OpenAIAssistant";
 import AppAppBar from "@/ui-components/AppAppBar";
+import PhysiotherapyPage from "@/app/physiotherapy/_components/temp";
 import "@mediapipe/hands";
-import {
-    Container,
-    createTheme,
-    CssBaseline,
-    PaletteMode,
-    Stack,
-    ThemeProvider,
-} from "@mui/material";
+import "@mediapipe/pose";
 import * as tf from "@tensorflow/tfjs";
-import "@tensorflow/tfjs-backend-webgl";
+import "@tensorflow/tfjs-backend-webgpu";
 import "@tensorflow/tfjs-core";
 import * as handPoseDetection from "@tensorflow-models/hand-pose-detection";
 import * as handpose from "@tensorflow-models/handpose";
@@ -64,156 +58,48 @@ export default async function Page() {
 
     const webcamRef: any = useRef(null);
     const canvasRef: any = useRef(null);
+import * as poseDetection from "@tensorflow-models/pose-detection";
+import { useEffect, useState } from "react";
 
-    const runHandpose = async () => {
-        const model = handPoseDetection.SupportedModels.MediaPipeHands;
-        const detector = await handPoseDetection.createDetector(model, {
-            runtime: "mediapipe",
-            solutionPath: "https://cdn.jsdelivr.net/npm/@mediapipe/hands",
-            // or 'base/node_modules/@mediapipe/hands' in npm.
-        });
+export default function Page() {
+    const [detectorState, setDetectorState]: any = useState();
 
-        console.log("Handpose model loaded.");
-        //  Loop and detect hands
-        setInterval(() => {
-            detect(detector);
-        }, 50);
-    };
-
-    const detect = async (net: any) => {
-        // Check data is available
-        if (
-            typeof webcamRef.current !== "undefined" &&
-            webcamRef.current !== null &&
-            webcamRef.current.video.readyState === 4
-        ) {
-            // Get Video Properties
-            const video = webcamRef.current.video;
-            const videoWidth = webcamRef.current.video.videoWidth;
-            const videoHeight = webcamRef.current.video.videoHeight;
-
-            // Set video width
-            webcamRef.current.video.width = videoWidth;
-            webcamRef.current.video.height = videoHeight;
-
-            // Set canvas height and width
-            canvasRef.current.width = videoWidth;
-            canvasRef.current.height = videoHeight;
-
-            // Make Detections
-            const hand = await net.estimateHands(video);
-
-            // Draw mesh
-            const ctx = canvasRef.current.getContext("2d");
-
-            var temp: any = [];
-
-            for (var i = 0; i < hand.length; i++) {
-                temp.push({});
-
-                for (var j = 0; j < hand[i].keypoints.length; j++) {
-                    const x = videoWidth - hand[i].keypoints[j].x;
-                    const y = hand[i].keypoints[j].y;
-
-                    ctx.beginPath();
-                    ctx.arc(x, y, 4, 0, 2 * Math.PI);
-                    ctx.fillStyle = "red";
-                    ctx.fill();
-
-                    temp[i][hand[i].keypoints[j].name] = { x: x, y: y };
-                }
-            }
-
-            for (var i = 0; i < temp.length; i++) {
-                for (var j = 0; j < lines.length; j++) {
-                    ctx.beginPath();
-                    ctx.moveTo(temp[i][lines[j][0]].x, temp[i][lines[j][0]].y);
-                    ctx.lineTo(temp[i][lines[j][1]].x, temp[i][lines[j][1]].y);
-                    ctx.stroke();
-                }
-            }
-        }
-    };
+    const [activityState, setActivityState] = useState<"arm" | "hand" | "legs">(
+        "arm"
+    );
 
     useEffect(() => {
-        runHandpose();
-    }, []);
+        (async () => {
+            if (activityState === "hand") {
+                const model = handPoseDetection.SupportedModels.MediaPipeHands;
+                const detector = await handPoseDetection.createDetector(model, {
+                    runtime: "mediapipe",
+                    solutionPath:
+                        "https://cdn.jsdelivr.net/npm/@mediapipe/hands",
+                    // or 'base/node_modules/@mediapipe/hands' in npm.
+                });
 
-    const [mode, setMode] = React.useState<PaletteMode>("light");
-    const [showCustomTheme, setShowCustomTheme] = React.useState(true);
-    const LPtheme = createTheme(getLPTheme(mode));
-    const defaultTheme = createTheme({ palette: { mode } });
+                setDetectorState(detector);
+            } else {
+                await tf.ready();
 
-    const toggleColorMode = () => {
-        setMode((prev: any) => (prev === "dark" ? "light" : "dark"));
-    };
+                const model = poseDetection.SupportedModels.BlazePose;
+                const detector = await poseDetection.createDetector(model, {
+                    enableSmoothing: true,
+                    modelType: "full",
+                    runtime: "tfjs",
+                });
 
-    const toggleCustomTheme = () => {
-        setShowCustomTheme((prev) => !prev);
-    };
+                setDetectorState(detector);
+            }
+        })();
+    });
 
     return (
-        <div>
-            <ThemeProvider theme={showCustomTheme ? LPtheme : defaultTheme}>
-                <CssBaseline />
-                <AppAppBar mode={mode} toggleColorMode={toggleColorMode} />
-                <Container style={{ marginTop: "50px" }}>
-                    <Stack direction="row">
-                        <div style={{ backgroundColor: "yellow" }}>
-                            <Webcam
-                                mirrored={true}
-                                ref={webcamRef}
-                                style={{
-                                    height: 400,
-                                    left: 0,
-                                    marginLeft: "auto",
-                                    marginRight: "auto",
-                                    minHeight: 400,
-                                    minWidth: 600,
-                                    right: 0,
-                                    textAlign: "left",
-                                    width: 600,
-                                }}
-                            />
-                            <canvas
-                                ref={canvasRef}
-                                style={{
-                                    height: 400,
-                                    left: 0,
-                                    marginLeft: "auto",
-                                    marginRight: "auto",
-                                    minHeight: 400,
-                                    minWidth: 600,
-                                    position: "relative",
-                                    textAlign: "center",
-                                    top: -400,
-                                    width: 600,
-                                }}
-                            />
-                        </div>
-                        <div className="top-6">
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Repellendus, neque? Facere, voluptatibus
-                            minus. Ratione ipsam dolorem doloremque nemo earum?
-                            Illum, esse quam! Exercitationem ipsa minus
-                            mollitia, commodi placeat explicabo fuga, adipisci
-                            ullam at, numquam id illum quo omnis aut nesciunt ex
-                            nulla quam perferendis repellat est unde
-                            consequuntur animi inventore itaque? Quia, assumenda
-                            voluptatem? Odit, ex delectus. Modi delectus
-                            voluptatum illo, soluta ipsum laudantium
-                            reprehenderit dicta nemo aut odit aliquid vero
-                            tempora repudiandae incidunt perspiciatis fuga ab
-                            odio! Sed cumque rem culpa molestiae nemo, illo
-                            excepturi adipisci aspernatur beatae quibusdam?
-                            Mollitia error saepe, vero iure magni reiciendis
-                            voluptas harum veritatis.
-                            <div className="mt-16">sdafsdafd</div>
-                        </div>
-                    </Stack>
-                    <OpenAIAssistant />
-                </Container>
-            </ThemeProvider>
-        </div>
+        <PhysiotherapyPage
+            activityState={activityState}
+            detector={detectorState}
+            setActivityState={setActivityState}
+        />
     );
 }
